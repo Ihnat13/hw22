@@ -30,7 +30,7 @@ f.register(fastifyStatic, {
 const port = process.env.PORT || 5555;
 const host = process.env.HOST || `localhost`
 
-f.listen({ port }, (err, adress) => {
+f.listen({ port, host }, (err, adress) => {
     if(err) {
         console.log(`Oops`, err)
         return
