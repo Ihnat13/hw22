@@ -6,25 +6,17 @@ const joinButton = document.getElementById('join-btn');
 const chatBox = document.getElementById('chat-box');
 const messageInput = document.getElementById('message-input');
 const sendButton = document.getElementById('send-btn');
-const ws = new WebSocket(`ws://${location.host}`)
+// const ws = new WebSocket(`ws://${location.host}`)
+const protocol = location.protocol === 'http:' ? 'ws' : 'wss'
+const ws = new WebSocket(`${protocol}://${location.host}`)
 let nickname;
 joinButton.addEventListener('click', () => {
     nickname = nicknameInput.value.trim();
     if (nickname !== '') {
         modal.style.display = 'none';
-        // ws.send(JSON.stringify({
-        //     type: `nickname`,
-        //     nickname: nickname,
-
-        // }
-        // ))
     }else{
         nickname = `anonymous`;
         modal.style.display = 'none';
-        // ws.send(JSON.stringify({
-        //     type: `nickname`,
-        //     nickname: nickname
-        // }))
     }
     
     
@@ -54,6 +46,7 @@ function sendMessage(nickname) {
         chatBox.scrollTop = chatBox.scrollHeight;
     }
 }
+
 ws.onmessage = ({data}) => {
     const dataMsg = JSON.parse({data}.data);
     const createDiv = document.createElement('div');
